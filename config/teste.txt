@@ -1,8 +1,7 @@
-# O arquivo txt deve seguir o seguinte padrão:
-    # 5: Número de posições
-    # 3: Altura máxima das pilhas(sempre será 3)
-    # 30 0 0: Posição 0: caixa de 30kg no chão
-    # 20 0 0: Posição 1: caixa de 20kg no chão
-    # B: Posição 2 braço mecânico
-    # 10 5 0: Posição 3: caixas de 10kg e 5kg empilhadas
-    # 7 2 1: Posição 4: caixas de 7kg, 2kg e 1kg empilhadas
+5
+3
+30 0 0
+20 0 0
+B
+10 5 0
+7 2 1
