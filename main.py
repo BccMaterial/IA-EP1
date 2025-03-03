@@ -17,4 +17,9 @@ def config_inicial(arquivo_configuracao): #Recebe um arquivo txt para configurar
             caixas = list(map(int, linhasArquivo.split())) #A partir da lista linhasArquivo, transforma cada elemento em uma lista própria
             posicaoBases.append(caixas) #Adiciona cada uma das listas dentro da lista posicaoBases
 
-    return numeroLinhas, numColunas, posicaoBases, posicaoBraco
+    return numeroLinhas, numColunas, posicaoBases, posicaoBraco #Posição bases é a lista inicial
+
+def custo_movimento(posicaoAtual, posicaoDesejada): #Terminar de implementar
+    distancia = abs(posicaoDesejada - posicaoAtual) #abs é utilizado para garantir que seja retornada uma distância positiva
+
+    return distancia if distancia <= 2 else round(distancia * 0.75) #VERIFICAR
