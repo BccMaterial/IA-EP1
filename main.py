@@ -19,7 +19,17 @@ def config_inicial(arquivo_configuracao): #Recebe um arquivo txt para configurar
 
     return numeroLinhas, numColunas, posicaoBases, posicaoBraco #Posição bases é a lista inicial
 
-def custo_movimento(posicaoAtual, posicaoDesejada): #Terminar de implementar
+def custo_movimento(posicaoAtual, posicaoDesejada): #Somente o custo de movimento do braço(sem incluir caixas)
     distancia = abs(posicaoDesejada - posicaoAtual) #abs é utilizado para garantir que seja retornada uma distância positiva
 
-    return distancia if distancia <= 2 else round(distancia * 0.75) #VERIFICAR
+    if(distancia <= 2):
+        return distancia
+    else:
+        return distancia * 0.75 #Se for maior que 2 retorna 75 porcento do custo
+    #OBS: a função deve estar funcionando normalmente, mas é melhor testar um pouco mais depois
+
+#def pegar_caixa(posicaoBases, posicaoBraco): #Pega a caixa na posição do braço
+    #if posicaoBases[posicaoBraco]: #Verifica se existe uma base na posição do braço
+
+
+
