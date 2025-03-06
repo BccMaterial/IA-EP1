@@ -3,6 +3,7 @@ from . import arquivo
 class BracoMecanico:
     # TODO: criar gerar_sucessores()
     # TODO: criar iniciar()
+    # TODO: criar testar_objetivo()
     def __init__(self, arquivo_txt): #Recebe um arquivo txt para configurar os dados iniciais
         self.arquivo_txt = arquivo_txt
         self.posicao_braco = None
@@ -30,6 +31,44 @@ class BracoMecanico:
 
     def iniciar():
         raise NotImplemented("iniciar não foi criado ainda")
+
+    def testar_objetivo(self):
+        # Todas as pilhas devem estar em ordem decrescente (Exemplo de ordem do array: [30, 20, 10])
+        # Todas as pilhas devem estar à esquerda (O tamanho de cada pilha deve ser descrescente: [3, 3, 2 ,1..])
+        todos_decrescentes = False
+        todos_a_esquerda = False
+        pilhas = self.bases_caixas
+
+        # Valida se a pilha está descrescente
+        def eh_decrescente(pilha):
+            for i in range(1, len(pilha)):
+                if pilha[i] > pilha[i-1]:
+                    return False
+            return True
+
+        # Validação se a pilha está vazia (Coloquei numa função só por semântica)
+        def pilha_vazia(pilha):
+            return len(pilha) == 0
+
+        # Itera todas as pilhas, verificando se existe alguma pilha fora de ordem
+        for pilha in pilhas:
+            if not eh_decrescente(pilha):
+                todos_decrescentes = False
+                break
+            todos_decrescentes = True
+
+        tamanho_pilhas = []
+        for pilha in pilhas:
+            # Se a pilha for vazia, então é a posição do braço (pulamos ela)
+            if pilha_vazia(pilha):
+                continue
+            # Cria uma nova lista, sem os 0s
+            pilha_limpa = [x for x in pilha if x != 0]
+            # Insere o tamanho dessa lista em outro lugar
+            tamanho_pilhas.append(len(pilha_limpa))
+        todos_a_esquerda = eh_decrescente(tamanho_pilhas)
+
+        return todos_decrescentes and todos_a_esquerda
 
     def movimento(self, pos_desejada):
         distancia = abs(pos_desejada - self.posicao_braco) #Utiliza abs para garantir que seja um distancia positiva
