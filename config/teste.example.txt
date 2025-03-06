@@ -1,0 +1,7 @@
+5 - N° de linhas (Quantidade de bases - slots de pilhas + posição do braço) 
+3 - N° de colunas (Máximo de caixa por pilha - altura)
+30 0 0
+20 0 0
+B
+10 5 0
+7 2 1
