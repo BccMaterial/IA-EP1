@@ -27,7 +27,12 @@ class BracoMecanico:
             else:
                 self.bases_caixas.append(list(map(int, linha_arquivo.split())))
 
-    def gerar_sucessores():
+    def gerar_sucessores(self, no):
+        # pos = no.estado
+        # TODO:
+        # Pegar movimentos possíveis (Quais são?)
+        # Determinar sucessores:
+        # Para cada movimento possível, temos que fazer algo
         raise NotImplemented("gerar_sucessores não foi criado ainda")
 
     def iniciar(self):
@@ -130,4 +135,9 @@ class BracoMecanico:
             return self.bases_caixas[self.posicao_braco][-1]
         else:
             return None
+
+    def heuristica(self, no):
+        posAtual = self.posicao_braco
+        posObj = no.estado
+        return abs(posAtual - posObj)
 
