@@ -30,6 +30,7 @@ class BracoMecanico:
                 self.bases_caixas.append(list(map(int, linha_arquivo.split())))
 
     def gerar_sucessores(self, no):
+        # TODO: Implementar condições pra ser um sucessor
         possiveisBases = [x for x in range(len(self.bases_caixas)) if x != self.base_braco and x != self.posicao_braco]
         carregando_caixa = self.caixa_carregada != 0
         sucessores = []
@@ -84,6 +85,7 @@ class BracoMecanico:
         return todos_decrescentes and todos_a_esquerda
 
     def custo(self, pos_desejada):
+        # TODO: implementar adicionar no & no_sucessor nos parametros
         custo = 0
         distancia = abs(pos_desejada - self.posicao_braco)
 
