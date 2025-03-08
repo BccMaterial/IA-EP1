@@ -48,7 +48,7 @@ class BracoMecanico:
 
         for i, base in enumerate(possiveisBases):
             # Se i-1 = -1, vai ser o tamanho máximo de colunas (usamos para validar se todas as pilhas estão à esquerda)
-            baseAnterior = possiveisBases[i-1] if i != 0 else range(self.numero_colunas)
+            # baseAnterior = possiveisBases[i-1] if i != 0 else range(self.numero_colunas)
             # (eh_decrescente(base) and self.pilha_tamanho(baseAnterior) >= self.pilha_tamanho(base)) or 
             if i == self.base_braco or i == self.posicao_braco:
                 continue
@@ -96,8 +96,7 @@ class BracoMecanico:
         for pilha in pilhas:
             total_caixas += len([x for x in pilha if x != 0])
             if not eh_decrescente(pilha):
-                todos_decrescentes = False
-                break
+                return False
             todos_decrescentes = True
 
         tamanho_pilhas = []
@@ -132,7 +131,7 @@ class BracoMecanico:
 
     def custo(self, no, no_destino):
         # Aresta = Indice do braço robótico no nó
-        return abs(no.aresta - no_destino.aresta)
+        return no_destino.custo
 
 
     def mover(self, pos_desejada):
@@ -186,8 +185,9 @@ class BracoMecanico:
     def pegar_e_mover(self, no, pos):
         self.pegar()
         self.mover(pos)
+        custo = self.calcular_custo(pos, no.aresta)
         estado_sucessor = self.bases_caixas
-        return No(self.to_hashable(estado_sucessor), no, pos)
+        return No(self.to_hashable(estado_sucessor), no, pos, custo)
 
     def mover_e_soltar(self, no, pos):
         self.mover(pos)
