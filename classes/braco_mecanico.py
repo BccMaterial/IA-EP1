@@ -1,5 +1,6 @@
 from . import arquivo
 from .no import No
+import random
 
 class BracoMecanico:
     # TODO: criar gerar_sucessores()
@@ -30,14 +31,46 @@ class BracoMecanico:
                 self.bases_caixas.append(list(map(int, linha_arquivo.split())))
 
     def gerar_sucessores(self, no):
-        # TODO: Implementar condições pra ser um sucessor
-        possiveisBases = [x for x in range(len(self.bases_caixas)) if x != self.base_braco and x != self.posicao_braco]
+        possiveisBases = [x for x in range(len(self.bases_caixas))]
         carregando_caixa = self.caixa_carregada != 0
         sucessores = []
-        # Os sucessores devem ter as seguintes características
-        # Se já está ordenado, e está mais à esquerda, não precisa reordenar
-        # Se o braço estiver carregando uma caixa, ela deve ser solta em um lugar
-        raise NotImplemented("gerar_sucessores não implementado")
+
+        def eh_decrescente(array):
+            for i in range(1, len(array)):
+                if array[i] > array[i-1]:
+                    return False
+            return True
+
+        for i, base in possiveisBases:
+            # Estamos indo de 0 à self.numero_colunas
+            # portanto, conseguimos verificar (eu acho, tem que revisar essa validacão) se todas as pilhas estão à esquerda
+            if (eh_decrescente(base) and len(base) == self.numero_colunas) or base == self.base_braco or base == self.posicao_braco:
+                continue
+            else:
+                no_sucessor = None
+                if carregando_caixa:
+                    # Vai retornar um no
+                    no_sucessor = self.mover_e_soltar(no, i)
+                else:
+                    # Vai retornar um no
+                    no_sucessor = self.pegar_e_mover(no, i)
+
+                if no_sucessor is not None:
+                    sucessores.append(no_sucessor)
+
+        # while(self.caixa_carregada == 0):
+        #     pos_aleatoria_inicial = random.choice(possiveisBases)
+        #     self.movimento(pos_aleatoria_movimento)
+        #     custoMovimento += self.custo(pos_aleatoria_inicial)
+        #     self.pegar()
+        #
+        # while(self.caixa_carregada == 0):
+        #     pos_aleatoria_movimento = random.choice(possiveisBases)
+        #     self.movimento(pos_aleatoria_movimento)
+        #     custoMovimento += self.custo(pos_aleatoria_movimento)
+        #     self.soltar()
+
+        return sucessores
 
 
     def iniciar(self):
@@ -84,10 +117,13 @@ class BracoMecanico:
 
         return todos_decrescentes and todos_a_esquerda
 
-    def custo(self, pos_desejada):
+    def calcular_custo(self, pos_desejada, pos_inicial=None):
         # TODO: implementar adicionar no & no_sucessor nos parametros
         custo = 0
         distancia = abs(pos_desejada - self.posicao_braco)
+    
+        if pos_inicial is not None:
+            distancia = abs(pos_desejada - pos_inicial)
 
         if(distancia <= 2):
             custo += distancia
@@ -98,8 +134,12 @@ class BracoMecanico:
         custo += round(self.caixa_carregada / 10)
         return custo
 
+    def custo(self, no, no_destino):
+        return self.calcular_custo(no_destino.estado, no.estado)
+
+
     def movimento(self, pos_desejada):
-        custo = self.custo(pos_desejada)
+        custo = self.calcular_custo(pos_desejada)
         self.energia_gasta_total += custo
         self.posicao_braco = pos_desejada
         self.movimentos.append(f"Foi para a posição {pos_desejada} e gastou {custo} de energia")
