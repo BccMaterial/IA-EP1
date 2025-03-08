@@ -16,6 +16,7 @@ class BracoMecanico:
         self.numero_linhas = 0 # Quantidade de bases
         self.numero_colunas = 0 # Altura máxima das pilhas
         self.movimentos = [] #Lista com todos os movimentos até o momento
+        self.total_caixas = 0
 
         str_arquivo_txt = arquivo.ler(self.arquivo_txt)
         linhas_arquivo = str_arquivo_txt.strip().split("\n")
@@ -28,7 +29,9 @@ class BracoMecanico:
                 self.base_braco = i
                 self.bases_caixas.append([]) #Adiciona lista vazia para representar o braço
             else:
-                self.bases_caixas.append(list(map(int, linha_arquivo.split())))
+                base = list(map(int, linha_arquivo.split()))
+                self.total_caixas += len([x for x in base if x != 0])
+                self.bases_caixas.append(base)
 
     def gerar_sucessores(self, no):
         possiveisBases = self.bases_caixas 
@@ -46,7 +49,8 @@ class BracoMecanico:
         for i, base in enumerate(possiveisBases):
             # Se i-1 = -1, vai ser o tamanho máximo de colunas (usamos para validar se todas as pilhas estão à esquerda)
             baseAnterior = possiveisBases[i-1] if i != 0 else range(self.numero_colunas)
-            if (eh_decrescente(base) and self.pilha_tamanho(baseAnterior) >= self.pilha_tamanho(base)) or i == self.base_braco or i == self.posicao_braco:
+            # (eh_decrescente(base) and self.pilha_tamanho(baseAnterior) >= self.pilha_tamanho(base)) or 
+            if i == self.base_braco or i == self.posicao_braco:
                 continue
             else:
                 no_sucessor = None
@@ -59,18 +63,6 @@ class BracoMecanico:
 
                 if no_sucessor is not None:
                     sucessores.append(no_sucessor)
-
-        # while(self.caixa_carregada == 0):
-        #     pos_aleatoria_inicial = random.choice(possiveisBases)
-        #     self.movimento(pos_aleatoria_movimento)
-        #     custoMovimento += self.custo(pos_aleatoria_inicial)
-        #     self.pegar()
-        #
-        # while(self.caixa_carregada == 0):
-        #     pos_aleatoria_movimento = random.choice(possiveisBases)
-        #     self.movimento(pos_aleatoria_movimento)
-        #     custoMovimento += self.custo(pos_aleatoria_movimento)
-        #     self.soltar()
 
         return sucessores
 
@@ -87,6 +79,7 @@ class BracoMecanico:
         todos_decrescentes = False
         todos_a_esquerda = False
         pilhas = self.to_list(no.estado)
+        total_caixas = 0
 
         # Valida se a pilha está descrescente
         def eh_decrescente(pilha):
@@ -101,6 +94,7 @@ class BracoMecanico:
 
         # Itera todas as pilhas, verificando se existe alguma pilha fora de ordem
         for pilha in pilhas:
+            total_caixas += len([x for x in pilha if x != 0])
             if not eh_decrescente(pilha):
                 todos_decrescentes = False
                 break
@@ -117,7 +111,7 @@ class BracoMecanico:
             tamanho_pilhas.append(len(pilha_limpa))
         todos_a_esquerda = eh_decrescente(tamanho_pilhas)
 
-        return todos_decrescentes and todos_a_esquerda
+        return todos_decrescentes and todos_a_esquerda and self.total_caixas == total_caixas
 
     def calcular_custo(self, pos_desejada, pos_inicial=None):
         # TODO: implementar adicionar no & no_sucessor nos parametros
@@ -151,16 +145,15 @@ class BracoMecanico:
         # Verifica se existe uma caixa na posição do braco e se está tentando pegar uma caixa na base do braço
         if self.bases_caixas[self.posicao_braco] and self.caixa_carregada == 0 and self.posicao_braco != self.base_braco: 
             retiradas = 0
-            
-            if self.ver_topo_pilha_atual() == 0:
-                self.caixa_carregada = self.bases_caixas[self.posicao_braco].pop() #Remove a caixa do topo da base com pop() e guarda ela na variavel do objeto
-                retiradas += 1
+
+            if self.pilha_vazia(self.bases_caixas[self.posicao_braco]):
+                return
 
             while self.ver_topo_pilha_atual() == 0:
                 self.caixa_carregada = self.bases_caixas[self.posicao_braco].pop() #Remove a caixa do topo da base com pop() e guarda ela na variavel do objeto
                 retiradas += 1
 
-            if len(self.bases_caixas[self.posicao_braco]) != 0:
+            if len(self.bases_caixas[self.posicao_braco]) != 0 and self.ver_topo_pilha_atual() != 0:
                 self.caixa_carregada = self.bases_caixas[self.posicao_braco].pop()
                 self.movimentos.append(f"Pegou a caixa na posição {self.posicao_braco} com peso {self.caixa_carregada}")
 
@@ -199,8 +192,9 @@ class BracoMecanico:
     def mover_e_soltar(self, no, pos):
         self.mover(pos)
         self.soltar()
+        custo = self.calcular_custo(pos, no.aresta)
         estado_sucessor = self.bases_caixas
-        return No(self.to_hashable(estado_sucessor), no, pos)
+        return No(self.to_hashable(estado_sucessor), no, custo)
 
     def ver_topo_pilha_atual(self):
         if self.bases_caixas[self.posicao_braco]:
@@ -221,4 +215,7 @@ class BracoMecanico:
 
     def pilha_tamanho(self, pilha):
         return len([x for x in pilha if x != 0])
+
+    def pilha_vazia(self, pilha):
+        return len([x for x in pilha if x != 0]) == 0
 
