@@ -4,3 +4,4 @@ problema = BracoMecanico("./config/teste.txt")
 
 algoritmos.a_estrela(problema)
 
+print(problema.bases_caixas)

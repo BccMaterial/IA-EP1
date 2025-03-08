@@ -38,15 +38,13 @@ class BracoMecanico:
         carregando_caixa = self.caixa_carregada != 0
         sucessores = []
 
-        def eh_decrescente(array):
-            for i in range(1, len(array)):
-                if array[i] > array[i-1]:
-                    return False
-            return True
-        
-        print(possiveisBases)
+        # def eh_decrescente(array):
+        #     for i in range(1, len(array)):
+        #         if array[i] > array[i-1]:
+        #             return False
+        #     return True
 
-        for i, base in enumerate(possiveisBases):
+        for i, pilha in enumerate(possiveisBases):
             # Se i-1 = -1, vai ser o tamanho máximo de colunas (usamos para validar se todas as pilhas estão à esquerda)
             # baseAnterior = possiveisBases[i-1] if i != 0 else range(self.numero_colunas)
             # (eh_decrescente(base) and self.pilha_tamanho(baseAnterior) >= self.pilha_tamanho(base)) or 
@@ -187,14 +185,14 @@ class BracoMecanico:
         self.mover(pos)
         custo = self.calcular_custo(pos, no.aresta)
         estado_sucessor = self.bases_caixas
-        return No(self.to_hashable(estado_sucessor), no, pos, custo)
+        return No(self.to_hashable(estado_sucessor), no, pos, custo, self.heuristica(no))
 
     def mover_e_soltar(self, no, pos):
         self.mover(pos)
         self.soltar()
         custo = self.calcular_custo(pos, no.aresta)
         estado_sucessor = self.bases_caixas
-        return No(self.to_hashable(estado_sucessor), no, custo)
+        return No(self.to_hashable(estado_sucessor), no, custo, self.heuristica(no))
 
     def ver_topo_pilha_atual(self):
         if self.bases_caixas[self.posicao_braco]:
