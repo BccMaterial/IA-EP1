@@ -43,7 +43,7 @@ class BracoMecanico:
 
         for i, base in possiveisBases:
             # Se i-1 = -1, vai ser o tamanho máximo de colunas (usamos para validar se todas as pilhas estão à esquerda)
-            baseAnterior = possiveisBases[i-1] or self.numero_colunas 
+            baseAnterior = possiveisBases[i-1] if i != 0 else self.numero_colunas
             if (eh_decrescente(base) and baseAnterior >= base) or base == self.base_braco or base == self.posicao_braco:
                 continue
             else:
