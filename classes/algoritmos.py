@@ -46,6 +46,7 @@ def a_estrela(problema):
         # retorna o No correspondente
         resultado = problema.testar_objetivo(no)
         if (resultado):
+            print(problema.bases_caixas)
             return (visitados.tamanho(), no)
 
         # função sucessores define os Nós sucessores

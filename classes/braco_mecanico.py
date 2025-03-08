@@ -31,7 +31,7 @@ class BracoMecanico:
                 self.bases_caixas.append(list(map(int, linha_arquivo.split())))
 
     def gerar_sucessores(self, no):
-        possiveisBases = [x for x in range(len(self.bases_caixas))]
+        possiveisBases = self.bases_caixas 
         carregando_caixa = self.caixa_carregada != 0
         sucessores = []
 
@@ -40,11 +40,13 @@ class BracoMecanico:
                 if array[i] > array[i-1]:
                     return False
             return True
+        
+        print(possiveisBases)
 
-        for i, base in possiveisBases:
+        for i, base in enumerate(possiveisBases):
             # Se i-1 = -1, vai ser o tamanho máximo de colunas (usamos para validar se todas as pilhas estão à esquerda)
-            baseAnterior = possiveisBases[i-1] if i != 0 else self.numero_colunas
-            if (eh_decrescente(base) and baseAnterior >= base) or base == self.base_braco or base == self.posicao_braco:
+            baseAnterior = possiveisBases[i-1] if i != 0 else range(self.numero_colunas)
+            if (eh_decrescente(base) and self.pilha_tamanho(baseAnterior) >= self.pilha_tamanho(base)) or i == self.base_braco or i == self.posicao_braco:
                 continue
             else:
                 no_sucessor = None
@@ -74,7 +76,7 @@ class BracoMecanico:
 
 
     def iniciar(self):
-        return No(self.bases_caixas, None, self.posicao_braco)
+        return No(self.to_hashable(self.bases_caixas), None, self.posicao_braco)
 
     def testar_objetivo(self, no):
         """
@@ -84,7 +86,7 @@ class BracoMecanico:
         """
         todos_decrescentes = False
         todos_a_esquerda = False
-        pilhas = no.estado
+        pilhas = self.to_list(no.estado)
 
         # Valida se a pilha está descrescente
         def eh_decrescente(pilha):
@@ -139,7 +141,7 @@ class BracoMecanico:
         return abs(no.aresta - no_destino.aresta)
 
 
-    def movimento(self, pos_desejada):
+    def mover(self, pos_desejada):
         custo = self.calcular_custo(pos_desejada)
         self.energia_gasta_total += custo
         self.posicao_braco = pos_desejada
@@ -149,13 +151,18 @@ class BracoMecanico:
         # Verifica se existe uma caixa na posição do braco e se está tentando pegar uma caixa na base do braço
         if self.bases_caixas[self.posicao_braco] and self.caixa_carregada == 0 and self.posicao_braco != self.base_braco: 
             retiradas = 0
+            
+            if self.ver_topo_pilha_atual() == 0:
+                self.caixa_carregada = self.bases_caixas[self.posicao_braco].pop() #Remove a caixa do topo da base com pop() e guarda ela na variavel do objeto
+                retiradas += 1
+
             while self.ver_topo_pilha_atual() == 0:
                 self.caixa_carregada = self.bases_caixas[self.posicao_braco].pop() #Remove a caixa do topo da base com pop() e guarda ela na variavel do objeto
-                self.movimentos.append(f"Pegou a caixa na posição {self.posicao_braco} com peso {self.caixa_carregada}")
                 retiradas += 1
 
             if len(self.bases_caixas[self.posicao_braco]) != 0:
                 self.caixa_carregada = self.bases_caixas[self.posicao_braco].pop()
+                self.movimentos.append(f"Pegou a caixa na posição {self.posicao_braco} com peso {self.caixa_carregada}")
 
             while retiradas >= 0:
                 self.bases_caixas[self.posicao_braco].append(0) 
@@ -163,6 +170,11 @@ class BracoMecanico:
 
     def soltar(self):
         retiradas = 0
+
+        if self.ver_topo_pilha_atual() == 0:
+            self.bases_caixas[self.posicao_braco].pop()
+            retiradas += 1
+
         while self.ver_topo_pilha_atual() == 0:
             self.bases_caixas[self.posicao_braco].pop()
             retiradas += 1
@@ -182,13 +194,13 @@ class BracoMecanico:
         self.pegar()
         self.mover(pos)
         estado_sucessor = self.bases_caixas
-        return No(estado_sucessor, no, pos)
+        return No(self.to_hashable(estado_sucessor), no, pos)
 
     def mover_e_soltar(self, no, pos):
         self.mover(pos)
         self.soltar()
         estado_sucessor = self.bases_caixas
-        return No(estado_sucessor, no, pos)
+        return No(self.to_hashable(estado_sucessor), no, pos)
 
     def ver_topo_pilha_atual(self):
         if self.bases_caixas[self.posicao_braco]:
@@ -198,6 +210,15 @@ class BracoMecanico:
 
     def heuristica(self, no):
         posAtual = self.posicao_braco
-        posObj = no.estado
+        posObj = no.aresta
         return abs(posAtual - posObj)
+    
+    def to_hashable(self, estado):
+        return tuple([tuple(x) for x in estado])
+
+    def to_list(self, estado):
+        return list([list(x) for x in estado]) 
+
+    def pilha_tamanho(self, pilha):
+        return len([x for x in pilha if x != 0])
 
