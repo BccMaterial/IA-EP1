@@ -92,9 +92,10 @@ def greedy(problema):
     return (visitados.tamanho(), None)
 
 def no_caminho(no):
-  caminho = []
-  while no.no_pai is not None:
-    caminho.append(no.estado)
-    no = no.no_pai
-  caminho.reverse()  # Inverte a ordem para que ela retorne uma lista do primeiro nó do Array até o ultimo
-  return caminho
+    caminho = []
+    while no.no_pai is not None:
+        caminho.append(no.estado)
+        no = no.no_pai
+    # Inverte a ordem para que ela retorne uma lista do primeiro nó do Array até o ultimo
+    caminho.reverse()
+    return caminho

@@ -14,15 +14,14 @@ class BracoMecanico:
         self.energia_gasta_total = 0 # Começa com 0
         self.caixa_carregada = 0 # Começa carregando nenhuma caixa
         self.bases_caixas = [] # Slots das pilhas
-        self.numero_linhas = 0 # Quantidade de bases
-        self.numero_colunas = 0 # Altura máxima das pilhas
-        self.movimentos = [] #Lista com todos os movimentos até o momento
+        self.qtd_bases = 0 # Quantidade de bases
+        self.altura_maxima = 0 # Altura máxima das pilhas
         self.total_caixas = 0
 
         str_arquivo_txt = arquivo.ler(self.arquivo_txt)
         linhas_arquivo = str_arquivo_txt.strip().split("\n")
-        self.numero_linhas = int(linhas_arquivo[0])
-        self.numero_colunas = int(linhas_arquivo[1])
+        self.qtd_bases = int(linhas_arquivo[0])
+        self.altura_maxima = int(linhas_arquivo[1])
         
         for i, linha_arquivo in enumerate(linhas_arquivo[2:]): #Começa na posição 3, pois a posição 1 e 2 são usadas para setar valores[
             if linha_arquivo.strip() == "B": #Encontra a posição do braço(strip é utilizado novamente para adicionar uma camada de segurança extra)
@@ -57,7 +56,7 @@ class BracoMecanico:
 
 
     def iniciar(self):
-        return No(self.to_hashable(self.bases_caixas), None, self.posicao_braco)
+        return No(self.to_hashable(self.bases_caixas), None, "Início")
 
     def testar_objetivo(self, no):
         """
@@ -95,8 +94,8 @@ class BracoMecanico:
                 continue
             # Insere o tamanho dessa lista em outro lugar
             tamanho_pilhas.append(self.pilha_tamanho(pilha))
-        max_pilhas = self.total_caixas // self.numero_colunas
-        pilha_sobrando = self.total_caixas % self.numero_colunas
+        max_pilhas = self.total_caixas // self.altura_maxima
+        pilha_sobrando = self.total_caixas % self.altura_maxima
         todos_a_esquerda =  all(x == 3 for x in tamanho_pilhas[:max_pilhas]) and\
                             tamanho_pilhas[max_pilhas] == pilha_sobrando
 
@@ -128,7 +127,7 @@ class BracoMecanico:
         custo = self.calcular_custo(pos_desejada)
         self.energia_gasta_total += custo
         self.posicao_braco = pos_desejada
-        self.movimentos.append(f"Foi para a posição {pos_desejada} e gastou {custo} de energia")
+        # self.movimentos.append(f"Foi para a posição {pos_desejada} e gastou {custo} de energia")
 
     def pegar(self):
         # Verifica se existe uma caixa na posição do braco e se está tentando pegar uma caixa na base do braço
@@ -144,7 +143,7 @@ class BracoMecanico:
 
             if len(self.bases_caixas[self.posicao_braco]) != 0 and self.ver_topo_pilha_atual() != 0:
                 self.caixa_carregada = self.bases_caixas[self.posicao_braco].pop()
-                self.movimentos.append(f"Pegou a caixa na posição {self.posicao_braco} com peso {self.caixa_carregada}")
+                # self.movimentos.append(f"Pegou a caixa na posição {self.posicao_braco} com peso {self.caixa_carregada}")
 
             while retiradas >= 0:
                 self.bases_caixas[self.posicao_braco].append(0) 
@@ -162,10 +161,10 @@ class BracoMecanico:
             retiradas += 1
 
         # Verifica se o braco está carregando uma caixa, se a altura da pilha é menor que seu valor máximo e se está tentando soltar uma caixa na base do braço
-        if self.caixa_carregada != 0 and len(self.bases_caixas[self.posicao_braco]) < self.numero_colunas and self.posicao_braco != self.base_braco:
+        if self.caixa_carregada != 0 and len(self.bases_caixas[self.posicao_braco]) < self.altura_maxima and self.posicao_braco != self.base_braco:
             self.bases_caixas[self.posicao_braco].append(self.caixa_carregada)
-            self.movimentos.append(f"Soltou a caixa {self.caixa_carregada} na pilha {self.posicao_braco}")
-            self.caixa_carregada = 0 #Remove a caixa da variável após colocar ela em outra pilha
+            # self.movimentos.append(f"Soltou a caixa {self.caixa_carregada} na pilha {self.posicao_braco}")
+            self.caixa_carregada = 0 # Remove a caixa da variável após colocar ela em outra pilha
             retiradas -= 1
 
         while retiradas > 0:
@@ -177,14 +176,14 @@ class BracoMecanico:
         self.mover(pos)
         custo = self.calcular_custo(pos, no.aresta)
         estado_sucessor = self.bases_caixas
-        return No(self.to_hashable(estado_sucessor), no, pos, custo, self.heuristica(no))
+        return No(self.to_hashable(estado_sucessor), no, f"Pegou a caixa {self.caixa_carregada} e moveu para a base {pos}", custo, self.heuristica(no))
 
     def mover_e_soltar(self, no, pos):
         self.mover(pos)
         self.soltar()
         custo = self.calcular_custo(pos, no.aresta)
         estado_sucessor = self.bases_caixas
-        return No(self.to_hashable(estado_sucessor), no, pos, custo, self.heuristica(no))
+        return No(self.to_hashable(estado_sucessor), no, f"Moveu para a posição {pos} e soltou a caixa {self.caixa_carregada}", custo, self.heuristica(no))
 
     def ver_topo_pilha_atual(self):
         if self.bases_caixas[self.posicao_braco]:
