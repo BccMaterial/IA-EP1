@@ -2,7 +2,7 @@ from classes import BracoMecanico, algoritmos
 
 problema = BracoMecanico("./config/teste.txt")
 
-print(f"Estado Inicial: {problema.bases_caixas}")
+print(f"Estado Inicial: {problema.to_hashable(problema.bases_caixas)}")
 resultado = algoritmos.a_estrela(problema)
 if resultado[1] is not None:
     print(f"Solução encontrada: {resultado[1]}")

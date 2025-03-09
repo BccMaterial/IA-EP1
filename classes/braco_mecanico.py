@@ -83,7 +83,7 @@ class BracoMecanico:
 
         # Itera todas as pilhas, verificando se existe alguma pilha fora de ordem
         for pilha in pilhas:
-            total_caixas += len([x for x in pilha if x != 0])
+            total_caixas += self.pilha_tamanho(pilha)
             if not eh_decrescente(pilha):
                 return False
             todos_decrescentes = True
@@ -93,11 +93,12 @@ class BracoMecanico:
             # Se a pilha for vazia, então é a posição do braço (pulamos ela)
             if pilha_vazia(pilha):
                 continue
-            # Cria uma nova lista, sem os 0s
-            pilha_limpa = [x for x in pilha if x != 0]
             # Insere o tamanho dessa lista em outro lugar
-            tamanho_pilhas.append(len(pilha_limpa))
-        todos_a_esquerda = eh_decrescente(tamanho_pilhas)
+            tamanho_pilhas.append(self.pilha_tamanho(pilha))
+        max_pilhas = self.total_caixas // self.numero_colunas
+        pilha_sobrando = self.total_caixas % self.numero_colunas
+        todos_a_esquerda =  all(x == 3 for x in tamanho_pilhas[:max_pilhas]) and\
+                            tamanho_pilhas[max_pilhas] == pilha_sobrando
 
         return todos_decrescentes and todos_a_esquerda and self.total_caixas == total_caixas
 
