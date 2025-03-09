@@ -21,12 +21,12 @@ def ler(caminho):
 
 def escrever(arquivo, movimentos, estado_final):
     with open(arquivo, "w+", encoding="utf-8") as arquivo:
-        arquivo.write("Estado final: \n")
+
         for pilhas in estado_final:
             arquivo.write(" ".join(map(str, pilhas)))
 
         arquivo.write("\n")
 
-        arquivo.write("Movimentos do braço até o estado objetivo: \n")
+        arquivo.write("\n")
         for movimento in movimentos:
             arquivo.write(movimento + "\n")
