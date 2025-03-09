@@ -63,6 +63,34 @@ def a_estrela(problema):
 
     return (visitados.tamanho(), None)
 
+def greedy(problema):
+    no = problema.iniciar()
+    fila = FilaPrioridade()
+    fila.push(0, no)
+    visitados = Visitados()
+    visitados.adicionar(no)
+
+    while not fila.esta_vazio():
+        no = fila.pop()
+        visitados.adicionar(no)
+
+        # faz o teste objetivo. Se chegou no resultado final
+        # retorna o No correspondente
+        resultado = problema.testar_objetivo(no)
+        if (resultado):
+            return (visitados.tamanho(), no)
+
+        # função sucessores define os Nós sucessores
+        nos_sucessores = problema.gerar_sucessores(no)
+
+        # para cada sucessor, se armazena se ainda não visitado
+        for no_sucessor in nos_sucessores:
+            # pula estado_filho se já foi expandido
+            if not visitados.foi_visitado(no_sucessor):
+                fila.push(no_sucessor.heuristica, no_sucessor)
+
+    return (visitados.tamanho(), None)
+
 def no_caminho(no):
   caminho = []
   while no.no_pai is not None:
