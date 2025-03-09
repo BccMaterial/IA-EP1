@@ -56,7 +56,7 @@ class BracoMecanico:
 
 
     def iniciar(self):
-        return No(self.to_hashable(self.bases_caixas), None, "Início")
+        return No(self.to_hashable(self.bases_caixas), None, "N 0")
 
     def testar_objetivo(self, no):
         """
@@ -174,16 +174,25 @@ class BracoMecanico:
     def pegar_e_mover(self, no, pos):
         self.pegar()
         self.mover(pos)
-        custo = self.calcular_custo(pos, no.aresta)
+        custo = self.calcular_custo(pos)
         estado_sucessor = self.bases_caixas
-        return No(self.to_hashable(estado_sucessor), no, f"Pegou a caixa {self.caixa_carregada} e moveu para a base {pos}", custo, self.heuristica(no))
+        # pos = 1
+        # self.posicao_braco = 2
+        # 2 - 1 = 1
+        casas_movidas = abs(self.posicao_braco - pos)
+        dir_movimento = "E" if self.posicao_braco - pos > 0 else "D"
+        caixa = self.caixa_carregada
+        return No(self.to_hashable(estado_sucessor), no, f"{dir_movimento} {casas_movidas} P {caixa} {custo}", custo, self.heuristica(no))
 
     def mover_e_soltar(self, no, pos):
         self.mover(pos)
         self.soltar()
-        custo = self.calcular_custo(pos, no.aresta)
+        custo = self.calcular_custo(pos)
         estado_sucessor = self.bases_caixas
-        return No(self.to_hashable(estado_sucessor), no, f"Moveu para a posição {pos} e soltou a caixa {self.caixa_carregada}", custo, self.heuristica(no))
+        casas_movidas = abs(self.posicao_braco - pos)
+        dir_movimento = "E" if self.posicao_braco - pos > 0 else "D"
+        caixa = self.caixa_carregada
+        return No(self.to_hashable(estado_sucessor), no, f"{dir_movimento} {casas_movidas} S {caixa} {custo}", custo, self.heuristica(no))
 
     def ver_topo_pilha_atual(self):
         if self.bases_caixas[self.posicao_braco]:
@@ -193,7 +202,16 @@ class BracoMecanico:
 
     def heuristica(self, no):
         posAtual = self.posicao_braco
-        posObj = no.aresta
+        arestaSplitada = no.aresta.split(" ")
+        dir_mov = arestaSplitada[0]
+        casas_movidas = int(arestaSplitada[1])
+        posObj = 0
+
+        if dir_mov == "E":
+            posObj = posAtual - casas_movidas
+        elif dir_mov == "D":
+            posObj = posAtual + casas_movidas
+
         return abs(posAtual - posObj)
     
     def to_hashable(self, estado):
