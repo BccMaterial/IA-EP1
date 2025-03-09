@@ -7,7 +7,7 @@ import random
 # Custo -> no.aresta - no_destino.aresta
 
 class BracoMecanico:
-    def __init__(self, arquivo_txt): #Recebe um arquivo txt para configurar os dados iniciais
+    def __init__(self, arquivo_txt=None): #Recebe um arquivo txt para configurar os dados iniciais
         self.arquivo_txt = arquivo_txt
         self.posicao_braco = None
         self.base_braco = None
@@ -18,27 +18,51 @@ class BracoMecanico:
         self.altura_maxima = 0 # Altura máxima das pilhas
         self.total_caixas = 0
 
-        str_arquivo_txt = arquivo.ler(self.arquivo_txt)
-        linhas_arquivo = str_arquivo_txt.strip().split("\n")
-        self.qtd_bases = int(linhas_arquivo[0])
-        self.altura_maxima = int(linhas_arquivo[1])
-        
-        for i, linha_arquivo in enumerate(linhas_arquivo[2:]): #Começa na posição 3, pois a posição 1 e 2 são usadas para setar valores[
-            if linha_arquivo.strip() == "B": #Encontra a posição do braço(strip é utilizado novamente para adicionar uma camada de segurança extra)
-                self.posicao_braco = i
-                self.base_braco = i
-                self.bases_caixas.append([]) #Adiciona lista vazia para representar o braço
-            else:
-                base = list(map(int, linha_arquivo.split()))
-                self.total_caixas += len([x for x in base if x != 0])
-                self.bases_caixas.append(base)
+        if arquivo_txt is not None:
+            str_arquivo_txt = arquivo.ler(self.arquivo_txt)
+            linhas_arquivo = str_arquivo_txt.strip().split("\n")
+            self.qtd_bases = int(linhas_arquivo[0])
+            self.altura_maxima = int(linhas_arquivo[1])
+            
+            for i, linha_arquivo in enumerate(linhas_arquivo[2:]): #Começa na posição 3, pois a posição 1 e 2 são usadas para setar valores[
+                if linha_arquivo.strip() == "B": #Encontra a posição do braço(strip é utilizado novamente para adicionar uma camada de segurança extra)
+                    self.posicao_braco = i
+                    self.base_braco = i
+                    self.bases_caixas.append([]) #Adiciona lista vazia para representar o braço
+                else:
+                    base = list(map(int, linha_arquivo.split()))
+                    self.total_caixas += len([x for x in base if x != 0])
+                    self.bases_caixas.append(base)
+        else:
+            self.qtd_bases = 5
+            self.altura_maxima = 3
+            self.base_braco = random.choice(range(self.qtd_bases))
+            self.posicao_braco = self.base_braco
+            
+            for i in range(self.qtd_bases):
+                if i == self.base_braco:
+                    self.bases_caixas.append([])
+                    continue
+                # Definir quantidade de caixas na pilha
+                quantidade_caixas = random.randint(0, self.altura_maxima)
+                pilha = []
+                for _ in range(quantidade_caixas):
+                    self.total_caixas += 1
+                    # Definir valores das caixas de forma aleatória
+                    pilha.append(random.randint(1, 45))
+
+                # Preencher o que sobrou com 0
+                for _ in range(self.altura_maxima - quantidade_caixas):
+                    pilha.append(0)
+
+                self.bases_caixas.append(pilha)
 
     def gerar_sucessores(self, no):
         possiveisBases = self.bases_caixas 
         carregando_caixa = self.caixa_carregada != 0
         sucessores = []
         
-        possiveisIndices = [x for x in range(len(possiveisBases)) if len(possiveisBases[x]) != 0 and self.posicao_braco != x]
+        possiveisIndices = [x for x in range(len(possiveisBases)) if len(possiveisBases[x]) != 0]
         random.shuffle(possiveisIndices)
         for i in possiveisIndices:
             no_sucessor = None
