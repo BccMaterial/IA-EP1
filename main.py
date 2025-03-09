@@ -1,4 +1,4 @@
-from classes import BracoMecanico, algoritmos
+from classes import BracoMecanico, algoritmos, arquivo
 
 problema_a_estrela = BracoMecanico("./config/teste.txt")
 print("Solução por A*")
@@ -36,3 +36,6 @@ if resultado[1] is not None:
     print(f"Número de iterações: {resultado[0]}")
 else:
     print(f"Não foi encontrada nenhuma solução (Número de iterações: {resultado[0]})")
+
+
+
