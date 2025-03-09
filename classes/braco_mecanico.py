@@ -184,7 +184,7 @@ class BracoMecanico:
         self.soltar()
         custo = self.calcular_custo(pos, no.aresta)
         estado_sucessor = self.bases_caixas
-        return No(self.to_hashable(estado_sucessor), no, custo, self.heuristica(no))
+        return No(self.to_hashable(estado_sucessor), no, pos, custo, self.heuristica(no))
 
     def ver_topo_pilha_atual(self):
         if self.bases_caixas[self.posicao_braco]:
