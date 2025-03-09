@@ -60,7 +60,9 @@ no_estado = arquivo.tupla_to_string(no_estado)
 print(no_estado)
 print(movimentos)
 
-arquivo.escrever("./output", "example3.txt", movimentos, no_estado)
+print(no_estado)
+
+arquivo.escrever("./output/example8.txt", movimentos, no_estado)
 
 
 
