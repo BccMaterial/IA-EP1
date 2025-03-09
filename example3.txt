@@ -1,0 +1,442 @@
+Estado final: 
+4
+
+5
+
+ 
+
+4
+
+0
+
+ 
+
+3
+
+
+
+
+3
+
+2
+
+ 
+
+2
+
+6
+
+ 
+
+1
+
+2
+
+
+
+
+4
+
+4
+
+ 
+
+2
+
+5
+
+ 
+
+3
+
+
+
+
+
+
+
+B
+
+ 
+
+B
+
+ 
+
+B
+
+Movimentos do braço até o estado objetivo: 
+D 1 P 40 5
+D 2 P 12 3
+E 1 S 0 1
+D 1 P 32 4
+E 1 P 12 1
+E 1 S 0 1
+E 1 P 32 4
+D 1 P 3 1
+E 1 P 25 3
+E 1 S 0 1
+E 1 P 40 5
+D 1 P 0 1
+D 1 S 0 1
+D 1 S 0 5
+E 1 S 0 1
+D 0 P 3 0
+D 0 S 0 0
+D 1 P 25 3
+D 1 S 0 1
+D 1 P 12 1
+D 0 S 3 0
+E 1 P 45 5
+E 1 S 0 1
+E 1 S 0 1
+D 1 S 0 1
+D 0 S 32 3
+D 0 P 3 0
+D 1 S 0 1
+D 1 P 3 1
+D 1 S 0 1
+E 1 S 0 1
+D 1 P 26 4
+D 1 S 0 1
+E 1 P 3 1
+E 1 S 0 1
+D 1 P 25 3
+D 1 P 3 1
+E 1 S 0 1
+D 0 P 3 0
+D 1 S 0 1
+E 1 P 26 4
+D 1 S 0 1
+D 1 P 3 1
+D 1 S 0 1
+D 1 P 0 1
+D 1 S 0 1
+E 1 P 26 1
+D 1 P 12 2
+D 0 P 32 0
+D 1 S 0 1
+D 0 P 3 0
+E 1 P 26 1
+E 1 S 0 1
+E 1 P 12 2
+E 1 P 3 1
+D 0 S 0 0
+D 1 P 32 4
+D 1 P 3 1
+E 1 S 0 1
+E 1 P 3 1
+E 1 S 25 3
+E 1 P 25 3
+D 0 P 25 0
+E 1 S 0 1
+E 1 P 12 2
+E 1 S 0 1
+D 1 P 26 4
+E 1 S 0 1
+E 1 P 12 2
+D 0 P 25 0
+D 1 S 0 3
+D 1 S 0 1
+E 1 S 0 1
+E 1 S 0 1
+E 1 S 0 1
+E 1 S 0 1
+D 1 P 40 1
+D 1 S 0 1
+D 1 P 12 2
+D 1 S 0 2
+D 1 S 0 1
+E 1 S 0 1
+E 1 P 40 1
+D 0 S 0 4
+D 0 P 44 0
+D 1 S 0 5
+E 1 S 0 1
+D 1 P 3 1
+E 1 P 3 1
+E 1 P 12 2
+D 1 P 32 4
+E 1 P 3 1
+E 1 S 0 1
+D 0 P 3 0
+E 1 S 0 1
+E 1 P 26 4
+E 1 S 0 1
+D 1 P 3 1
+D 0 P 44 0
+E 1 S 0 1
+E 1 P 3 1
+D 0 P 32 0
+D 1 S 0 1
+E 1 P 25 3
+D 1 P 3 1
+D 0 P 45 0
+E 1 S 0 1
+D 1 P 25 3
+E 1 S 0 1
+D 0 S 12 1
+E 1 P 26 1
+E 1 S 0 1
+D 1 S 26 4
+E 1 S 0 1
+E 1 P 25 3
+E 1 S 0 1
+D 1 P 3 1
+D 1 P 44 1
+D 1 P 12 2
+D 0 P 45 0
+D 0 S 0 4
+D 1 S 0 1
+D 0 P 3 0
+E 1 P 26 4
+E 1 P 3 1
+E 1 S 0 1
+D 1 S 0 1
+E 1 P 26 4
+D 0 S 0 3
+E 1 P 3 1
+D 1 S 0 1
+E 1 S 0 1
+D 1 S 0 1
+D 1 P 3 1
+D 0 S 0 1
+D 1 P 44 5
+D 1 P 45 1
+D 0 P 40 0
+E 1 S 0 1
+D 1 P 32 4
+E 1 P 12 2
+D 1 S 0 1
+E 1 P 12 1
+D 0 S 0 1
+D 1 P 3 1
+E 1 S 0 1
+D 1 P 3 1
+E 1 P 26 4
+E 1 P 3 1
+D 0 P 44 0
+E 1 S 0 1
+D 0 P 26 0
+E 1 P 44 5
+D 1 P 26 1
+D 0 P 45 0
+E 1 S 0 5
+D 1 S 25 3
+D 0 S 25 2
+E 1 P 44 5
+E 1 P 3 1
+E 1 P 26 1
+E 1 S 25 3
+D 0 P 44 0
+D 1 S 0 1
+D 1 P 12 1
+D 1 P 44 1
+D 1 P 40 1
+D 0 S 0 4
+E 1 P 45 5
+E 1 S 0 1
+D 0 P 3 0
+D 0 S 0 0
+E 1 P 26 1
+E 1 S 0 1
+E 1 S 0 1
+D 1 S 0 1
+D 1 P 3 1
+D 0 S 0 4
+D 1 S 0 1
+D 0 P 12 0
+E 1 P 3 1
+D 1 S 0 1
+E 1 P 12 1
+D 0 S 0 1
+D 1 P 45 5
+D 1 P 26 4
+D 1 S 0 1
+D 1 S 0 1
+D 1 P 12 2
+D 0 S 26 3
+E 1 P 3 1
+D 1 S 0 1
+E 1 P 26 4
+D 1 S 0 1
+D 1 P 26 4
+D 1 S 25 3
+D 1 P 25 1
+D 1 S 0 1
+D 0 P 26 0
+D 1 S 0 4
+D 1 P 3 1
+E 1 S 0 1
+E 1 S 0 1
+D 0 P 3 0
+D 1 S 0 1
+D 0 P 3 0
+D 1 P 3 1
+D 0 S 0 0
+E 1 S 0 1
+D 1 P 3 1
+D 0 S 45 4
+E 1 P 40 5
+D 1 P 12 2
+D 1 S 0 1
+E 1 P 25 3
+D 0 P 25 0
+D 1 S 0 1
+E 1 P 3 1
+E 1 P 3 1
+E 1 P 32 4
+E 1 S 0 1
+D 1 P 26 4
+D 0 S 0 3
+E 1 S 0 1
+E 1 P 12 2
+D 1 S 0 1
+D 1 P 26 4
+D 1 S 0 1
+E 1 P 3 1
+D 0 S 0 4
+E 1 P 32 4
+E 1 P 25 3
+D 1 P 3 1
+D 0 S 0 0
+E 1 P 45 5
+D 0 S 0 3
+D 1 S 0 1
+D 0 P 3 0
+E 1 P 45 1
+D 1 S 0 1
+D 1 P 25 1
+D 0 P 45 0
+D 0 S 0 4
+D 1 S 25 3
+D 0 S 0 0
+E 1 P 3 1
+E 1 S 0 1
+D 0 P 45 0
+D 1 S 0 1
+E 1 P 32 1
+E 1 S 0 4
+E 1 S 0 1
+D 1 P 32 4
+D 1 P 3 1
+E 1 P 12 1
+D 0 P 0 0
+D 1 S 0 1
+E 1 P 12 2
+D 1 S 0 1
+E 1 P 3 1
+D 1 S 0 1
+E 1 P 3 1
+D 0 S 0 0
+D 0 P 32 0
+D 1 S 0 1
+D 0 P 3 0
+D 1 S 0 1
+D 1 S 0 3
+D 1 P 32 4
+D 1 P 32 4
+D 0 S 0 3
+E 1 S 0 1
+E 1 P 40 1
+D 0 P 32 0
+D 0 S 0 3
+D 1 S 0 1
+D 0 P 3 0
+D 0 P 44 0
+E 1 S 0 5
+D 0 S 0 4
+D 1 P 44 1
+D 0 S 0 4
+E 1 S 0 1
+D 1 P 26 1
+D 0 P 12 0
+D 0 S 0 1
+E 1 P 32 4
+D 1 S 0 2
+E 1 S 0 1
+D 0 P 12 0
+E 1 S 0 1
+D 0 P 25 0
+D 1 P 32 4
+D 1 S 0 1
+E 1 P 26 4
+E 1 S 0 1
+E 1 P 3 1
+E 1 S 0 1
+D 0 P 26 0
+D 0 S 0 3
+D 1 S 0 1
+D 0 P 44 0
+E 1 P 44 5
+D 1 P 26 4
+D 1 P 32 4
+E 1 P 12 1
+D 1 S 0 1
+D 1 P 32 4
+D 1 S 0 1
+D 0 P 45 0
+E 1 S 0 1
+E 1 S 0 3
+E 1 P 32 4
+D 1 S 0 1
+E 1 S 0 1
+D 0 S 25 2
+D 1 S 0 1
+D 0 P 40 0
+E 1 P 26 4
+E 1 S 0 1
+D 0 S 3 0
+E 1 P 45 5
+E 1 S 0 1
+D 1 S 0 1
+E 1 P 32 4
+E 1 P 3 1
+D 1 P 32 4
+D 0 P 3 0
+E 1 S 0 1
+D 1 P 26 4
+D 0 S 0 0
+D 1 P 25 3
+E 1 P 3 1
+E 1 S 0 1
+D 0 S 0 2
+D 1 P 12 2
+E 1 P 3 1
+D 0 S 0 0
+D 1 P 44 5
+E 1 S 0 4
+D 0 P 45 0
+E 1 S 0 1
+E 1 P 3 1
+D 0 P 44 0
+E 1 S 0 1
+D 1 P 26 4
+D 1 S 0 1
+D 1 P 12 1
+D 1 S 0 1
+D 1 P 45 1
+E 1 S 0 1
+D 0 P 32 0
+E 1 S 0 1
+D 0 P 45 0
+E 1 P 45 5
+D 1 P 12 2
+D 1 P 32 1
+E 1 S 0 1
+D 1 P 12 2
+D 0 P 44 0
+E 1 S 0 1
+D 0 S 0 2
+D 1 S 0 1
+E 1 S 0 1
+D 1 P 3 1
+D 1 S 0 1
+E 1 P 40 1
+E 1 P 3 1
+E 1 S 3 1
+E 1 P 25 1
+D 0 S 0 2
+E 1 P 40 5
+D 0 S 0 2
+D 1 S 0 1

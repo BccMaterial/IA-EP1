@@ -39,7 +39,17 @@ if resultado[1] is not None:
 else:
     print(f"Não foi encontrada nenhuma solução (Número de iterações: {resultado[0]})")
 
-sol = resultado[1]
+no = resultado[1] #Pega o nó na segunda posição da tupla
+movimentos = algoritmos.no_caminho_aresta(no)
 
-print(algoritmos.no_caminho_aresta(sol))
+no_estado = no.estado
+no_estado = arquivo.tupla_to_string(no_estado)
+
+print(no_estado)
+print(movimentos)
+
+arquivo.escrever("./output", "example3.txt", movimentos, no_estado)
+
+
+
 
