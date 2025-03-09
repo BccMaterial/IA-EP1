@@ -197,9 +197,9 @@ class BracoMecanico:
 
     def pegar_e_mover(self, no, pos):
         pos_anterior = self.posicao_braco
+        custo = self.calcular_custo(pos)
         self.pegar()
         self.mover(pos)
-        custo = self.calcular_custo(pos)
         estado_sucessor = self.bases_caixas
         casas_movidas = abs(pos_anterior - pos)
         dir_movimento = "E" if pos_anterior - pos > 0 else "D"
@@ -208,9 +208,9 @@ class BracoMecanico:
 
     def mover_e_soltar(self, no, pos):
         pos_anterior = self.posicao_braco
+        custo = self.calcular_custo(pos)
         self.mover(pos)
         self.soltar()
-        custo = self.calcular_custo(pos)
         estado_sucessor = self.bases_caixas
         casas_movidas = abs(pos_anterior - pos)
         dir_movimento = "E" if pos_anterior - pos > 0 else "D"
