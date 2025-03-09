@@ -1,5 +1,6 @@
 from . import arquivo
 from .no import No
+import random
 
 # Estado -> self.bases_caixas
 # Aresta -> self.posicao_braco
@@ -37,30 +38,20 @@ class BracoMecanico:
         possiveisBases = self.bases_caixas 
         carregando_caixa = self.caixa_carregada != 0
         sucessores = []
-
-        # def eh_decrescente(array):
-        #     for i in range(1, len(array)):
-        #         if array[i] > array[i-1]:
-        #             return False
-        #     return True
-
-        for i, pilha in enumerate(possiveisBases):
-            # Se i-1 = -1, vai ser o tamanho máximo de colunas (usamos para validar se todas as pilhas estão à esquerda)
-            # baseAnterior = possiveisBases[i-1] if i != 0 else range(self.numero_colunas)
-            # (eh_decrescente(base) and self.pilha_tamanho(baseAnterior) >= self.pilha_tamanho(base)) or 
-            if i == self.base_braco or i == self.posicao_braco:
-                continue
+        
+        possiveisIndices = [x for x in range(len(possiveisBases)) if len(possiveisBases[x]) != 0 and self.posicao_braco != x]
+        random.shuffle(possiveisIndices)
+        for i in possiveisIndices:
+            no_sucessor = None
+            if carregando_caixa:
+                # Vai retornar um no
+                no_sucessor = self.mover_e_soltar(no, i)
             else:
-                no_sucessor = None
-                if carregando_caixa:
-                    # Vai retornar um no
-                    no_sucessor = self.mover_e_soltar(no, i)
-                else:
-                    # Vai retornar um no
-                    no_sucessor = self.pegar_e_mover(no, i)
+                # Vai retornar um no
+                no_sucessor = self.pegar_e_mover(no, i)
 
-                if no_sucessor is not None:
-                    sucessores.append(no_sucessor)
+            if no_sucessor is not None:
+                sucessores.append(no_sucessor)
 
         return sucessores
 
@@ -206,7 +197,7 @@ class BracoMecanico:
         return abs(posAtual - posObj)
     
     def to_hashable(self, estado):
-        return tuple([tuple(x) for x in estado])
+        return tuple([tuple(x) if len(x) > 0 else tuple() for x in estado])
 
     def to_list(self, estado):
         return list([list(x) for x in estado]) 
