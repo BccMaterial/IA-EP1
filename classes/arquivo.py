@@ -1,5 +1,16 @@
 def tupla_to_string(tuplas):
-    return "\n".join(" ".join(str(i) if i else "B" for i in tupla_interior) for tupla_interior in tuplas)
+    strings = [] #Linhas
+
+    for tupla in tuplas:
+        if not tupla: #Verifica se é a posição vazia do braco mecanico ()
+            strings.append("B") #Adiciona B na string caso seja a pos do braço
+            continue #Continua para o else quando encontra ()
+        else:
+            item = [str(item) for item in tupla]
+            string = " ".join(item)
+            strings.append(string)
+
+    return  "\n".join(strings) #Quebra uma linha para imprimir de modo adequado
 
 
 def ler(caminho):
