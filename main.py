@@ -16,6 +16,8 @@ problema_a_estrela = deepcopy(problema)
 print("Solução por A*")
 print("-----------------------------------------------------------------------")
 print(f"Estado Inicial: {problema_a_estrela.to_hashable(problema_a_estrela.bases_caixas)}")
+print()
+
 resultado = algoritmos.a_estrela(problema_a_estrela)
 if resultado[1] is not None:
     print(f"Solução encontrada: {resultado[1]}")
