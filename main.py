@@ -39,5 +39,7 @@ if resultado[1] is not None:
 else:
     print(f"Não foi encontrada nenhuma solução (Número de iterações: {resultado[0]})")
 
+sol = resultado[1]
 
+print(algoritmos.no_caminho_aresta(sol))
 

@@ -99,3 +99,11 @@ def no_caminho(no):
     # Inverte a ordem para que ela retorne uma lista do primeiro nó do Array até o ultimo
     caminho.reverse()
     return caminho
+
+def no_caminho_aresta(no):
+    caminho = []
+    while no.no_pai is not None:
+        caminho.append(no.aresta)
+        no = no.no_pai
+    caminho.reverse()
+    return caminho
