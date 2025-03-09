@@ -1,7 +1,17 @@
 from classes import BracoMecanico, algoritmos, arquivo
 from copy import deepcopy
+import os
 
-problema = BracoMecanico()
+print("Obs.: Caso o arquivo não exista, ou não seja passado nenhum, as pilhas serão sorteadas")
+caminho = input("Insira o caminho do arquivo de configuração: ")
+
+if caminho is None or caminho == "":
+    print("Caminho não foi enviado. Sorteando pilhas...")
+    caminho = None
+elif os.path.isfile(caminho):
+    print("Caminho não encontrado. Sorteando pilhas...")
+
+problema = BracoMecanico(caminho)
 problema_a_estrela = deepcopy(problema)
 print("Solução por A*")
 print("-----------------------------------------------------------------------")
