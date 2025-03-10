@@ -38,8 +38,6 @@ else:
 
 print()
 
-
-
 #Solução com dijkstra:
 problema_dijkstra = deepcopy(problema)
 print("Solução por Dijkstra")
@@ -61,8 +59,6 @@ else:
 
 print()
 
-
-
 #Solução com greedy:
 problema_greedy = deepcopy(problema)
 print("Solução por Greedy")
@@ -80,7 +76,4 @@ if resultado_greedy[1] is not None:
     print(f"Caminho e estado final armazenado em: {caminho_arquivo}")
 else:
     print(f"Não foi encontrada nenhuma solução (Número de iterações: {resultado_greedy[0]})")
-
-
-
 

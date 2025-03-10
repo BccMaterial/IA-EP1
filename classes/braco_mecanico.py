@@ -92,7 +92,7 @@ class BracoMecanico:
         - Todas as pilhas devem estar à esquerda (O tamanho de cada pilha deve ser descrescente: [3, 3, 2 ,1..])
         """
         todos_decrescentes = False
-        todos_a_esquerda = False
+        todos_alinhados = False
         pilhas = self.to_list(no.estado)
         total_caixas = 0
 
@@ -123,13 +123,13 @@ class BracoMecanico:
             tamanho_pilhas.append(self.pilha_tamanho(pilha))
         max_pilhas = self.total_caixas // self.altura_maxima
         pilha_sobrando = self.total_caixas % self.altura_maxima
-        todos_a_esquerda =  all(x == self.altura_maxima for x in tamanho_pilhas[:max_pilhas]) and\
-                            tamanho_pilhas[max_pilhas] == pilha_sobrando
-
-        todos_a_direita =   all(x == self.altura_maxima for x in tamanho_pilhas[len(tamanho_pilhas) - max_pilhas:]) and\
-                            tamanho_pilhas[max_pilhas * (- 1)]
+        if self.alinhamento == "E":
+            todos_alinhados =   all(x == self.altura_maxima for x in tamanho_pilhas[:max_pilhas]) and\
+                                tamanho_pilhas[max_pilhas] == pilha_sobrando
+        else:
+            todos_alinhados =   all(x == self.altura_maxima for x in tamanho_pilhas[len(tamanho_pilhas) - max_pilhas:]) and\
+                                tamanho_pilhas[max_pilhas * (- 1)]
         
-        todos_alinhados = todos_a_esquerda if self.alinhamento == "E" else todos_a_direita
         return todos_decrescentes and todos_alinhados and self.total_caixas == total_caixas
 
     def calcular_custo(self, pos_desejada, pos_inicial=None):
