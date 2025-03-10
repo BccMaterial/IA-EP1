@@ -7,7 +7,10 @@ import random
 # Custo -> no.aresta - no_destino.aresta
 
 class BracoMecanico:
-    def __init__(self, arquivo_txt=None): #Recebe um arquivo txt para configurar os dados iniciais
+    def __init__(self, arquivo_txt=None, alinhamento="E"): #Recebe um arquivo txt para configurar os dados iniciais
+        if alinhamento != "E" and alinhamento != "D":
+            raise ValueError("Os possíveis valores para o alinhamento são E ou D.")
+        self.alinhamento = alinhamento
         self.arquivo_txt = arquivo_txt
         self.posicao_braco = None
         self.base_braco = None
@@ -120,10 +123,14 @@ class BracoMecanico:
             tamanho_pilhas.append(self.pilha_tamanho(pilha))
         max_pilhas = self.total_caixas // self.altura_maxima
         pilha_sobrando = self.total_caixas % self.altura_maxima
-        todos_a_esquerda =  all(x == 3 for x in tamanho_pilhas[:max_pilhas]) and\
+        todos_a_esquerda =  all(x == self.altura_maxima for x in tamanho_pilhas[:max_pilhas]) and\
                             tamanho_pilhas[max_pilhas] == pilha_sobrando
 
-        return todos_decrescentes and todos_a_esquerda and self.total_caixas == total_caixas
+        todos_a_direita =   all(x == self.altura_maxima for x in tamanho_pilhas[len(tamanho_pilhas) - max_pilhas:]) and\
+                            tamanho_pilhas[max_pilhas * (- 1)]
+        
+        todos_alinhados = todos_a_esquerda if self.alinhamento == "E" else todos_a_direita
+        return todos_decrescentes and todos_alinhados and self.total_caixas == total_caixas
 
     def calcular_custo(self, pos_desejada, pos_inicial=None):
         # TODO: implementar adicionar no & no_sucessor nos parametros

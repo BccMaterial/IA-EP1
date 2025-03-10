@@ -11,7 +11,9 @@ if caminho is None or caminho == "":
 elif os.path.isfile(caminho):
     print("Caminho não encontrado. Sorteando pilhas...")
 
-problema = BracoMecanico(caminho)
+alinhamento = input("Insira para qual lado a pilha deve ser organizada (E - Esq. D - Dir.): ")
+
+problema = BracoMecanico(caminho, alinhamento)
 problema_a_estrela = deepcopy(problema)
 print("Solução por A*")
 print("-----------------------------------------------------------------------")
